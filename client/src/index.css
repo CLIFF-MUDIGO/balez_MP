@@ -21,4 +21,5 @@ input:focus{
 }
 button{
     height: 45px !important;
+    box-shadow: none !important;
 }
