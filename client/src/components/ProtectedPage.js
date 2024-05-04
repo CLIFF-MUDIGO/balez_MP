@@ -27,30 +27,56 @@ function ProtectedPage({ children }) {
 
 
     useEffect(() => {
-        if(localStorage.getItem('token')) {
+        if (localStorage.getItem('token')) {
             validateToken();
-        }else{
-           
+        } else {
+
             navigate('/login');
         }
-        
+
     }, []);
 
 
-
-
-
-
     return (
-        <div>
-            {user &&
-                <div className='p-5'>
+        user && (
+            <div>
+            {/* header */}
+            <div className='flex justify-between items-center p-5 bg-primary'>
+
+                <h1 className='text-white text-2xl'>
+                    CMP
+                </h1>
+                <div className='bg-white py-2 px-5 rounded flex gap-1 items-center'> 
+                <i className="ri-user-line"></i>
+                <span
+                className="underline cursor-pointer uppercase"
+                >
+                
                     {user.name}
-                    {children}
+                </span>
+                <i className="ri-logout-box-r-line ml-10"
+                    onClick={()=>{
+                        localStorage.removeItem("token");
+                        navigate("/login");
+                    }}
+                
+                ></i>
+
                 </div>
-            }
+               
+            
+            </div>
+        
+            {/* content */}
+            <div className='p-5'>
+                {children}
+            </div>
         </div>
-    )
+        
+
+        )
+        
+    );
 }
 
 export default ProtectedPage
