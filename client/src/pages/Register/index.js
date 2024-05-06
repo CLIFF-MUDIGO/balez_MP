@@ -5,6 +5,7 @@ import Divider from '../../components/Divider';
 import { RegisterUser } from '../../apicalls/users';
 import { message } from 'antd';
 
+
 const rules = [
   {
     required: true,
@@ -14,15 +15,19 @@ const rules = [
 
 const Register = () => {
   const navigate = useNavigate()
+  
   const onFinish = async (values) => {
     try {
+     
       const response = await RegisterUser(values);
+      
       if (response.success) {
         message.success(response.message);
       } else {
         throw new Error(response.message);
       }
     } catch (error) {
+      
       message.error(error.message);
     }
   };
