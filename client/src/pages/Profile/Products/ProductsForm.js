@@ -1,5 +1,8 @@
-import { Col, Form, Input, Modal, Row, Select, Tabs } from 'antd'
+import { Col, Form, Input, Modal, Row, Select, Tabs, message} from 'antd'
 import TextArea from 'antd/es/input/TextArea'
+import {useDispatch, useSelector} from 'react-redux'
+import {AddProduct} from '../../../apicalls/products'
+import {setLoader} from '../../../redux/loadersSlice'
 import React from 'react'
 
 const additionalThings = [
@@ -30,8 +33,26 @@ function ProductsForm({
   showProductForm,
   setShowProductForm,
 }) {
-  const onFInish = (values) => {
-    console.log(values);
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.users)
+  const onFInish = async(values) => {
+   try {
+    values.seller = user._id;
+    values.status = "pending";
+    dispatch(setLoader(true));
+    const response = await AddProduct(values);
+    dispatch(setLoader(false));
+    if (response.success) {
+      message.success(response.message);
+      setShowProductForm(false);
+    }else{
+      message.error(response.message);
+    }
+    
+   } catch (error) {
+    dispatch(setLoader(false))
+    message.error(error.message);
+   }
   }
   const formRef = React.useRef(null)
   return (
