@@ -8,6 +8,10 @@ const port = process.env.PORT || 5000;
 
 
 const userRoutes = require('./routes/usersRoutes');
+const productRoutes = require('./routes/productsRoute');
+
+
 app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
 
 app.listen(port, () => console.log(`Node/Express server started on port ${port}`));
