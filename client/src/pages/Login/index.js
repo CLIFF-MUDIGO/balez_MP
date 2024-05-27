@@ -4,6 +4,8 @@ import { Button, Form, Input, message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import Divider from '../../components/Divider'
 import { LoginUser } from '../../apicalls/users'
+import { useDispatch } from 'react-redux'
+import { setLoader } from '../../redux/loadersSlice'
 
 
 
@@ -18,31 +20,33 @@ const rules = [
 
 const Login = () => {
 
-const navigate = useNavigate();
-
-  const onFinish = async(values) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onFinish = async (values) => {
     try {
-     
+      dispatch(setLoader(true));
       const response = await LoginUser(values);
-      
+      dispatch(setLoader(false));
+
       if (response.success) {
         message.success(response.message);
         localStorage.setItem('token', response.data);
-        window.location.href = '/';
+        navigate('/');
       } else {
         throw new Error(response.message);
       }
     } catch (error) {
-      
+      dispatch(setLoader(false))
+
       message.error(error.message);
     }
   };
 
-    useEffect(() => {
-      if(localStorage.getItem('token')) {
-        navigate('/')
-      }
-    }, []);
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/')
+    }
+  }, [navigate]);
 
   return (
     <div className='h-screen bg-primary flex justify-center items-center'>

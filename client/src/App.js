@@ -1,15 +1,16 @@
 import { useSelector } from 'react-redux'; 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ProtectedPage from './components/ProtectedPage';
+import Spinner from './components/Spinner';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import ProtectedPage from './components/ProtectedPage';
-import Spinner from './components/Spinner';
+
 
 
 
 function App() {
-  const {loading} = useSelector((state) => state.loaders)
+  const {loading} = useSelector((state) => state.loaders);
   return (
     <div>
      {loading && <Spinner />}

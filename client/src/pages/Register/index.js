@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Divider from '../../components/Divider';
 import { RegisterUser } from '../../apicalls/users';
 import { message } from 'antd';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../redux/loadersSlice';
 
 
 const rules = [
@@ -14,12 +16,13 @@ const rules = [
 ];
 
 const Register = () => {
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onFinish = async (values) => {
     try {
-     
+     dispatch(setLoader(true));
       const response = await RegisterUser(values);
+      dispatch(setLoader(false));
       
       if (response.success) {
         message.success(response.message);
@@ -27,7 +30,7 @@ const Register = () => {
         throw new Error(response.message);
       }
     } catch (error) {
-      
+      dispatch(setLoader(false))
       message.error(error.message);
     }
   };
@@ -35,7 +38,7 @@ const Register = () => {
       if(localStorage.getItem('token')) { 
        navigate('/')
     }
-    }, []);
+    }, [navigate]);
   return (
     <div className="h-screen bg-primary flex justify-center items-center">
       <div className="bg-white p-5 rounded w-[450px]">
