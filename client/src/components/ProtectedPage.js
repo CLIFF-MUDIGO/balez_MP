@@ -59,6 +59,7 @@ function ProtectedPage({ children }) {
                         <i className="ri-user-line"></i>
                         <span
                             className="underline cursor-pointer uppercase"
+                            onClick={() => navigate("/profile")}
                         >
 
                             {user.name}
