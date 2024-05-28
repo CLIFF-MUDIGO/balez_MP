@@ -6,6 +6,7 @@ import { GetProducts } from '../../../apicalls/products';
 import { setLoader } from '../../../redux/loadersSlice';
 
 function Products() {
+  const [selectedProduct, setSelectedProduct] = React.useState(null);
   const [products, setProducts] = React.useState([]);
   const [showProductForm, setShowProductForm] = React.useState(false);
   const dispatch = useDispatch();
@@ -58,21 +59,25 @@ function Products() {
       dataIndex: 'action',
       render: (text, record) => {
 
-        return<div className="flex gap-5">
-            <i className="ri-delete-bin-line"></i>
-            <i className="ri-edit-2-line"></i>
-          </div>
+        return <div className="flex gap-5">
+          <i className="ri-delete-bin-line"></i>
+          <i className="ri-edit-2-line"
+
+            onClick={() => {
+              setSelectedProduct(record);
+              setShowProductForm(true);
+            }}
+          ></i>
+
+
+        </div>
       }
-        
+
 
     },
   ];
 
-  const handleEdit = (record) => {
-    // Handle edit action
-    setShowProductForm(true);
-    // Additional logic to populate the form with product details can go here
-  };
+
 
   useEffect(() => {
     getData();
@@ -83,13 +88,21 @@ function Products() {
       <div className='flex justify-end mb-2 '>
         <Button
           type="default"
-          onClick={() => setShowProductForm(true)}
+          onClick={() => {
+            setSelectedProduct(null);
+            setShowProductForm(true)
+          }}
         >
           Add Product
         </Button>
-      </div> 
+      </div>
       <Table columns={columns} dataSource={products} />
-      {showProductForm && <ProductsForm showProductForm={showProductForm} setShowProductForm={setShowProductForm} />}
+      {showProductForm && <ProductsForm
+        showProductForm={showProductForm}
+        setShowProductForm={setShowProductForm}
+        selectedProduct={selectedProduct}
+        getData={getData}
+      />}
     </div>
   );
 }

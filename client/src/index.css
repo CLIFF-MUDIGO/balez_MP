@@ -1,37 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Montserrat", sans-serif !important;
-    
-    font-size: 15px;
-}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif !important;
 
-input, select, textarea {
-    min-height:45px !important;
-    border: 1px solid #b9b9b9 !important;
-    width: 100% !important;
-}
-input:focus, textarea:focus, select:focus {
-    outline: none !important;
-    border: 1px solid #6a6a6a !important;
-    box-shadow: none !important;
-}
-button{
-    height: 45px !important;
-    box-shadow: none !important;
+  font-size: 15px;
 }
 
-table{
-    border: #1a1a1a 1px solid !important;
-    border-radius: 2px;
+input,
+select,
+textarea {
+  min-height: 45px !important;
+  border: 1px solid #b9b9b9 !important;
+  width: 100% !important;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  border: 1px solid #6a6a6a !important;
+  box-shadow: none !important;
+}
+button {
+  height: 45px !important;
+  box-shadow: none !important;
 }
 
-i{
-font-size: 20px !important;
+table {
+  border: #1a1a1a 1px solid !important;
+  border-radius: 2px;
+}
+
+i {
+  font-size: 20px !important;
 }
