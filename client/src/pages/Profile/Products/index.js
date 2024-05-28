@@ -1,8 +1,9 @@
 import { Button, Table, message } from 'antd';
 import React, { useEffect } from 'react';
 import ProductsForm from './ProductsForm';
+import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { GetProducts } from '../../../apicalls/products';
+import { DeleteProduct, GetProducts } from '../../../apicalls/products';
 import { setLoader } from '../../../redux/loadersSlice';
 
 function Products() {
@@ -28,6 +29,25 @@ function Products() {
       message.error(error.message);
     }
   };
+
+  const deleteProduct = async (id) => {
+    try {
+      dispatch(setLoader(true));
+      const response = await DeleteProduct(id);
+      dispatch(setLoader(false));
+      if (response.success) {
+        message.success(response.message);
+        getData();
+      } else {
+        message.error(response.message);
+      }
+    } catch (error) {
+      dispatch(setLoader(false));
+      message.error(error.message);
+    }
+  };
+
+
 
   const columns = [
     {
@@ -55,12 +75,23 @@ function Products() {
       dataIndex: 'status',
     },
     {
+      title: 'Added on',
+      dataIndex: 'createdAt',
+      render: (text, record) => moment(record.createdAt).format('DD-MM-YYYY hh:mm A')
+  },
+  
+    {
       title: 'Action',
       dataIndex: 'action',
       render: (text, record) => {
 
         return <div className="flex gap-5">
-          <i className="ri-delete-bin-line"></i>
+          <i className="ri-delete-bin-line"
+          
+          onClick={() => {deleteProduct(record._id);
+          }}
+          
+          ></i>
           <i className="ri-edit-2-line"
 
             onClick={() => {
@@ -77,8 +108,7 @@ function Products() {
     },
   ];
 
-
-
+ 
   useEffect(() => {
     getData();
   }, []); // Correct placement of the dependency array
